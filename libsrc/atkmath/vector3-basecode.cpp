@@ -144,12 +144,6 @@ Vector3 operator * (double d, const Vector3& a)
     return a; 
 }
 
-double operator * (const Vector3& a, const Vector3& b)
-{ 
-    // todo
-    return 0.0;
-}
-
 Vector3 operator / (const Vector3& a, double d)
 { 
     // todo

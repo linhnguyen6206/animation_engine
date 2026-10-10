@@ -1,0 +1,7 @@
+1. Why are some methods declared static in Vector3?
+2. What is the difference between operator+= and operator+
+3. Why do we check (*this == orig) in the assignment operator?
+4. What are edge cases of euler angle conversions? (Gimbol Lock)
+5. In slerp, why do we have a special case when the angle between q0 and q1 is 0? When does this occur?
+6. In Quaternion.toAngleAxis, why do we have a special case for (0,0,0,1)?
+7. In Matrix, how can we use the functions implemented in Quaternion to support angle/axis?
