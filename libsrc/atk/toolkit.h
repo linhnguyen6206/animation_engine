@@ -5,4 +5,5 @@
 #include "pose.h"
 #include "skeleton.h"
 #include "transform.h"
+#include "spline.h"
 #include "glmmath.h"

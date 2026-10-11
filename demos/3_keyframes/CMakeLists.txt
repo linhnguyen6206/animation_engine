@@ -1,4 +1,4 @@
-set(LIBS atkmath imgui ${LIBS})
+set(LIBS atkmath atk imgui ${LIBS})
 
 file (GLOB_RECURSE EXAMPLES CONFIGURE_DEPENDS *.cpp)
 foreach (example ${EXAMPLES})
@@ -6,4 +6,3 @@ foreach (example ${EXAMPLES})
   add_executable(3_${example_name} ${example})
   target_link_libraries(3_${example_name} ${LIBS})
 endforeach()
-

@@ -73,6 +73,6 @@ int Motion::getKeyID(double t) const {
 }
 
 Pose Motion::getValue(double t, bool loop) const {
-  return Pose()
+  return Pose();
 } // todo
 }
