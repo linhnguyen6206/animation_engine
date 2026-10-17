@@ -17,43 +17,60 @@ Vector3::Vector3()
 
 Vector3::Vector3(double x, double y, double z)
 { 
-    // todo
+    mX = x;
+    mY = y;
+    mZ = z;
 }
 
 Vector3::Vector3(const Vector3& v)
 { 
-    // todo
+    mX = v.mX;
+    mY = v.mY;
+    mZ = v.mZ;
 }
 
 // ASSIGNMENT OPERATORS
 
 Vector3& Vector3::operator = (const Vector3& v)
 { 
-    // todo
+    if (this != &v)
+    {
+        mX = v.mX;
+        mY = v.mY;
+        mZ = v.mZ;
+    }
     return *this; 
 }
 
 Vector3& Vector3::operator += ( const Vector3& v )
 { 
-    // todo
+    mX += v.mX;
+    mY += v.mY;
+    mZ += v.mZ;
     return *this; 
 }
 
 Vector3& Vector3::operator -= ( const Vector3& v )
 { 
-    // todo
+    mX -= v.mX;
+    mY -= v.mY;
+    mZ -= v.mZ;
     return *this; 
 }
 
 Vector3& Vector3::operator *= ( double d )
 { 
-    // todo
+    mX *= d;
+    mY *= d;
+    mZ *= d;
     return *this; 
 }
 
 Vector3& Vector3::operator /= ( double d )
 { 
-    // todo
+    mX /= d;
+    mY /= d;
+    mZ /= d;
     return *this; 
 }
 
@@ -85,117 +102,133 @@ double Vector3::z() const
 // SPECIAL FUNCTIONS
 double Vector3::length() const
 {  
-    // todo
-    return 0.0; 
+    return std::sqrt(mX * mX + mY * mY + mZ * mZ);
 }
 
 double Vector3::sqrLength() const
 {  
-    // todo
-    return 0.0; 
+    return (mX * mX + mY * mY + mZ * mZ);
 }
 
 Vector3 Vector3::normalized() const 
 {
-    // todo
-    return Vector3();
+    double len = length();
+    if (len > 0.0)
+    {
+        return Vector3(mX / len, mY / len, mZ / len);
+    }
+    return Vector3(0.0, 0.0, 0.0);
 }
 
 void Vector3::normalize() 
 { 
-    // todo
-    
+    double len = length();
+    if (len > 0.0)
+    {
+        mX /= len;
+        mY /= len;
+        mZ /= len;
+    }
 }
 
 Vector3 Vector3::Cross(const Vector3 &left, const Vector3& right)
 {
-    // todo
-    return Vector3();
+    return Vector3(
+        left.mY * right.mZ - left.mZ * right.mY,
+        left.mZ * right.mX - left.mX * right.mZ,
+        left.mX * right.mY - left.mY * right.mX
+    );
 }
 
 // FRIENDS
 Vector3 operator - (const Vector3& a)
 {  
-    // todo
-    return Vector3(); 
-}
+    return Vector3(-a.x(), -a.y(), -a.z()); 
+}                       
 
 Vector3 operator + (const Vector3& a, const Vector3& b)
 { 
-    // todo
-    return Vector3(); 
+    return Vector3(a.x()+ b.x(), a.y() + b.y(), a.z() + b.z()); 
 }
 
 Vector3 operator - (const Vector3& a, const Vector3& b)
 { 
-    // todo
-    return Vector3(); 
+    return Vector3(a.x() - b.x(), a.y() - b.y(), a.z() - b.z()); 
 }
 
 Vector3 operator * (const Vector3& a, double d)
 { 
-    // todo
-    return Vector3(); 
+    return Vector3(a.x() * d, a.y() * d, a.z() * d); 
 }
 
 Vector3 operator * (double d, const Vector3& a)
-{ 
-    // todo
-    return a; 
+{
+    return a * d; 
 }
 
 double operator * (const Vector3& a, const Vector3& b)
 { 
-    // todo
-    return 0.0;
+    return (a.x() * b.x()) + (a.y() * b.y()) + (a.z() * b.z());
 }
 
 Vector3 operator / (const Vector3& a, double d)
 { 
-    // todo
-    return Vector3(); // todo
+    return Vector3(a.x() / d, + a.y() / d, a.z() / d); 
 }
 
 
 int operator == (const Vector3& a, const Vector3& b)
 { 
-    //float eps = 0.001f; // low precision equality
-    return 0;  // todo
+    float eps = 0.001f; // low precision equality
+
+    return (std::abs(a.x() - b.x()) < eps) &&
+            (std::abs(a.y() - b.y()) < eps) &&
+            (std::abs(a.z() - b.z()) < eps);
 }
 
 int operator != (const Vector3& a, const Vector3& b)
 { 
-    return false; //todo
+    return !(a == b);
 }
 
 double Vector3::Dot(const Vector3& a, const Vector3& b)
 {
-    return 0; //todo
+    return (a.x() * b.x() + a.y() * b.y() + a.z() * b.z());
 }
 
 std::istream& operator>>(std::istream& s, Vector3& v)
 {
-    return s; // todo
+    double x, y, z;
+    s >> x >> y >> z;
+    v = Vector3(x, y, z);
+    return s; 
 }
 
 std::ostream& operator<<(std::ostream& s, const Vector3& v)
 {
-    // todo
+    s << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";
     return s;
 }
 
 Vector3 Vector3::Lerp(const Vector3& a, const Vector3& b, float t)
 {
-    return Vector3(); // todo (next assignment)
-}
-
-double Vector3::Distance(const Vector3& a, const Vector3& b)
-{
-    return 0; // todo 
+    return Vector3(
+        a.x() + (b.x() - a.x()) * t,
+        a.y() + (b.y() - a.y()) * t,
+        a.z() + (b.z() - a.z()) * t
+    ); 
 }
 
 double Vector3::DistanceSqr(const Vector3& a, const Vector3& b)
 {
-    return 0; // todo
+    double dx = a.x() - b.x();
+    double dy = a.y() - b.y();
+    double dz = a.z() - b.z();
+    return (dx * dx) + (dy * dy) + (dz * dz);
+}
+
+double Vector3::Distance(const Vector3& a, const Vector3& b)
+{
+    return std::sqrt(DistanceSqr(a, b));
 }
 }
