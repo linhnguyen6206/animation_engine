@@ -166,11 +166,14 @@ Vector3 operator * (double d, const Vector3& a)
     return a * d; 
 }
 
+<<<<<<< HEAD
 double operator * (const Vector3& a, const Vector3& b)
 { 
     return (a.x() * b.x()) + (a.y() * b.y()) + (a.z() * b.z());
 }
 
+=======
+>>>>>>> 1859693f996c5a5ff462b0c21e40e13a4f5cd7e7
 Vector3 operator / (const Vector3& a, double d)
 { 
     return Vector3(a.x() / d, + a.y() / d, a.z() / d); 

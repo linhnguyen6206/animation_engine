@@ -3,6 +3,8 @@ set(SRC
     bvhreader.cpp
     bvhwriter.cpp
     skeleton.cpp
+    spline.cpp
+    spline-basecode.cpp
     joint.cpp
     pose.cpp
     motion.cpp
