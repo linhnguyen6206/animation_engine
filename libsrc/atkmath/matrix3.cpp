@@ -42,7 +42,7 @@ Matrix3::Matrix3(Matrix3::RotOrder roo, const Vector3& eulerAngles)
 
 Matrix3::Matrix3(const Vector3& axis, double rad)
 {
-	 fromAxisAngle(axis, rad);
+     fromAxisAngle(axis, rad);
 }
 
 Vector3 Matrix3::toEulerAngles(Matrix3::RotOrder roo) const
