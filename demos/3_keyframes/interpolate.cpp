@@ -36,6 +36,16 @@ class DrawCurve : public atkui::Framework
       drawLine(prev, next);
       prev = next;
     }
+    // Animation portion
+    float duration = 2.0f;
+    float loopedTime = std::fmod(elapsedTime(), duration);
+
+    float time = loopedTime/duration;
+
+    vec3 animatedPos = evaluate(time);
+
+    setColor(vec3(1, 0, 0));
+    drawSphere(animatedPos, 15);
   }
 
   void keyUp(int key, int mod) {

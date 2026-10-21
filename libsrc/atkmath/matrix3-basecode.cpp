@@ -5,12 +5,73 @@ namespace atkmath {
 
 Vector3 Matrix3::toEulerAnglesXYZ() const
 {
-   return Vector3();
+   double x = 0.0;
+   double y = 0.0;
+   double z = 0.0;
+
+   double sy = m13;
+
+   if (sy > 1.0) sy = 1.0;
+   if (sy < -1.0) sy = -1.0;
+
+   y = std::asin(sy);
+
+   if (std::abs(std::cos(y)) > 0.0001)
+   {
+      x = std::atan2(-m23, m33);
+      z = std::atan2(-m12, m11);
+   }
+   else
+   {
+      z = 0.0;
+      if (sy > 0.0)
+      {
+         x = std::atan2(m21, m22);
+      }
+      else
+      {
+      x = std::atan2(-m21, m22);
+      }
+   }
+   return Vector3(x, y, z);
 }
 
 Vector3 Matrix3::toEulerAnglesXZY() const
 {
-   return Vector3();
+   double x = 0.0;
+   double y = 0.0;
+   double z = 0.0;
+
+   // 1. Extract Z
+   double sz = -m12;
+
+   // Clamp sin of z to [-1.0, 1.0]
+   if (sz > 1.0) sz = 1.0;
+   if (sz < -1.0) sz = -1.0;
+
+   z = std::asin(sz);
+
+   // 2. Check for Gimbal lock
+   // if cos(z) is very close to 0, z is near +/- 90 degrees
+   if (std::abs(std::cos(z)) > 0.0001)
+   {
+      // Not in Gimbal Lock
+      // X uses Column 2
+      x = std::atan2(m32, m22);
+      
+      // Y uses Row 1
+      y = std::atan2(m13, m11);
+   }
+   else
+   {
+      // Gimbal lock: X and Y axes are aligned
+      y = 0.0;
+
+      // Because Y is 0, m23 is purely -sin(x) and m33 is purely cos(x)
+      x = std::atan2(-m23, m33);
+   }
+   
+   return Vector3(x, y, z);
 }
 
 Vector3 Matrix3::toEulerAnglesYXZ() const
@@ -100,12 +161,53 @@ Vector3 Matrix3::toEulerAnglesYZX() const
 
 Vector3 Matrix3::toEulerAnglesZXY() const
 {
-   return Vector3();
+   double x = 0.0;
+   double y = 0.0;
+   double z = 0.0;
+
+   double sx = m32;
+   if (sx > 1.0) sx = 1.0;
+   if (sx < -1.0) sx = -1.0;
+
+   x = std::asin(sx);
+
+   if (std::abs(std::cos(x)) > 0.0001)
+   {
+      y = std::atan2(-m31, m33);
+      z = std::atan2(-m12, m22);
+   }
+   else 
+   {
+      z = 0.0;
+      y = std::atan2(m13, m11);
+   }
+   return Vector3(x, y, z);
 }
 
 Vector3 Matrix3::toEulerAnglesZYX() const
 {
-   return Vector3();
+   double x = 0.0;
+   double y = 0.0;
+   double z = 0.0;
+
+   double sy = -m31;
+
+   if (sy > 1.0) sy = 1.0;
+   if (sy < -1.0) sy = -1.0;
+
+   y = std::asin(sy);
+
+   if (std::abs(std::cos(y)) > 0.0001)
+   {
+      x = std::atan2(m32, m33);
+      z = std::atan2(m21, m11);
+   }
+   else
+   {
+      z = 0.0;
+      x = std::atan2(-m23, m22);
+   }
+   return Vector3(x, y, z);
 }
 
 void Matrix3::fromEulerAnglesXYZ(const Vector3& angleRad)
