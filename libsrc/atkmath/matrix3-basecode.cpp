@@ -50,8 +50,6 @@ Vector3 Matrix3::toEulerAnglesXZY() const
    if (sz < -1.0) sz = -1.0;
 
    z = std::asin(sz);
-
-   // 2. Check for Gimbal lock
    // if cos(z) is very close to 0, z is near +/- 90 degrees
    if (std::abs(std::cos(z)) > 0.0001)
    {
