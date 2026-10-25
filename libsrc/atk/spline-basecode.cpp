@@ -38,9 +38,15 @@ Spline::Key Spline::getValue(float t) const
         (-p0 + 3.0f * p1 - 3.0f * p2 + p3) * u3
     );
 
+    // Compute orientation using SLERP
+    glm::quat q0 = mKeys[i].ori;
+    glm::quat q1 = mKeys[i + 1].ori;
+    glm::quat interpolated_ori = glm::slerp(q0, q1, u);
+
     Key result;
     result.time = t;
     result.pos = interpolated_value;
+    result.ori = interpolated_ori;
   return result; 
 }
 
