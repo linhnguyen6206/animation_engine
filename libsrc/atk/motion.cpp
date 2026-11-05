@@ -61,18 +61,33 @@ void Motion::clear() {
 }
 
 double Motion::getDuration() const {
-  return 0.0; // todo
+  return (mKeys.size() - 1) * mDt;
 }
 
 double Motion::getNormalizedDuration(double t) const {
-  return 0.0; // todo
+  return fmod(t, getDuration()) / getDuration();
 }
 
 int Motion::getKeyID(double t) const {
-  return 0; // todo
+  if (mKeys.size() == 0) return 0;
+
+  t = getNormalizedDuration(t) * getDuration();
+  return (int)(t / mDt);
 }
 
 Pose Motion::getValue(double t, bool loop) const {
-  return Pose();
-} // todo
+  if (mKeys.size() == 0) return Pose();
+  if (mKeys.size() == 1) return mKeys[0];
+
+  if (loop) {
+    t = getNormalizedDuration(t) * getDuration();
+  } else {
+    if (t >= getDuration()-glm::epsilon<float>()) return mKeys[mKeys.size()-1];
+    else if (t < 0) return mKeys[0];
+  }
+
+  int segment = (int)(t / mDt); // assumes uniform spacing
+  double u = (t - segment*mDt)/mDt;
+  return Pose::Lerp(mKeys[segment], mKeys[segment+1], u);
+} 
 }

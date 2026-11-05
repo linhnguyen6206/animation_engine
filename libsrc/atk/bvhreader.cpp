@@ -1,6 +1,7 @@
 #include "atk/bvhreader.h"
 #include "atk/glmmath.h"
 #include <iostream>
+#include <algorithm>
 
 namespace atk {
 atk::RotOrder stringToRoo(const std::string& _order) 
@@ -99,6 +100,8 @@ bool BVHReader::loadJoint(std::ifstream &inFile,
   {
     inFile.get(); //" "
     getline(inFile, jointname);// joint name
+    jointname.erase(remove_if(jointname.begin(), jointname.end(), isspace), jointname.end());
+
     Joint* joint = new Joint(jointname);
     skeleton.addJoint(joint, pParent);
     inFile >> readString; // "{"
