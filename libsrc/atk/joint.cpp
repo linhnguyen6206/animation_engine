@@ -165,8 +165,24 @@ glm::quat Joint::getGlobalRotation() const
     return mLocal2Global.r();
 }
 
-void Joint::fk() // todo
+void Joint::fk()
 {
+    if (getParent() == nullptr)
+    {
+        // Base case: Root joint has no parent
+        mLocal2Global = mLocal2Parent;
+    }
+    else
+    {
+        // Multiply parent's global transform by a joint's local transform
+        mLocal2Global = getParent()->getLocal2Global() * mLocal2Parent;
+    }
+
+    for (int i = 0; i < getNumChildren(); i++)
+    {
+        Joint* child = getChildAt(i);
+        child->fk();
+    }
 }
 
 void Joint::Attach(Joint* pParent, Joint* pChild)

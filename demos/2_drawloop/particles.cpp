@@ -56,7 +56,7 @@ class MyWindow : public agl::Window {
     // (optional) For the best-looking blending, use the Z value to place
     // particle in front of the previous
     for (const Particle&p : particles) {
-    renderer.sprite(p.position, p.color, 50.0f);
+    renderer.sprite(p.position, p.color, 20.0f);
     }
     renderer.endShader();
   }
