@@ -69,7 +69,7 @@ void Skeleton::clear()
 void Skeleton::fk()
 {
     if (!mRoot) return; // Nothing loaded
-    //todo
+    mRoot->fk();
 }
 
 
