@@ -1,4 +1,5 @@
 #include "agl/window.h"
+#include <algorithm>
 
 using namespace glm;
 using glm::vec3;

@@ -16,9 +16,6 @@ class Framework : public agl::Window {
   Framework(Display type, int width = 500, int height = 500);
   virtual ~Framework();
 
-  friend class SkeletonDrawer;
-  friend class ::Devil;
-
  protected:
   virtual void scene() {} // override to update and draw custom components
   virtual void draw() override;
