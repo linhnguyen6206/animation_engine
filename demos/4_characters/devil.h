@@ -32,7 +32,7 @@ public:
 
          vec3 p1 = joint->getGlobalTranslation();
          vec3 p2 = joint->getParent()->getGlobalTranslation();
-         f.drawEllipsoid(p1, p2, jointRadius);
+         //f.drawEllipsoid(p1, p2, jointRadius);
          f.drawSphere(p2, jointRadius);
          f.drawSphere(p1, jointRadius);
       }

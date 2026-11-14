@@ -26,12 +26,28 @@ public:
 
    Motion blend(const Motion& m1, const Motion& m2, double alpha)
    {
-      Motion blend;
-      blend.setFramerate(m1.getFramerate());
+      Motion result;
+      float fps = m1.getFramerate();
+      result.setFramerate(fps);
 
-      // todo: replace the following line with your code
-      blend.appendKey(m1.getKey(0)); // placeholder
-      return blend;
+      double duration = m1.getDuration() * (1 - alpha) + m2.getDuration() * alpha;
+
+      double deltaT = 1/ fps;
+
+      for (double t = 0.0f; t <= duration + 0.0001f; t += deltaT)
+      {
+         double u = t / duration;
+         double t1 = u * m1.getDuration();
+         double t2 = u * m2.getDuration();
+
+         Pose pose1 = m1.getValue(t1);
+         Pose pose2 = m2.getValue(t2);
+
+         Pose newPose = Pose::Lerp(pose1, pose2, alpha);
+         
+         result.appendKey(newPose);
+      }
+      return result;
    }
 
    void scene()
