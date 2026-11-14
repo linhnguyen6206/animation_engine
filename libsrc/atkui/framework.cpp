@@ -15,7 +15,8 @@ Framework::Framework(Display type, int screenWidth, int screenHeight) : agl::Win
     background(vec3(0.0));
     setCameraEnabled(false); 
 
-  } else {
+  } 
+  else {
     vec3 center = vec3(0, 0, 0);
     vec3 dim = vec3(500, 1000, 500);
     background(vec3(0.8));
@@ -109,6 +110,26 @@ void Framework::drawCylinder(const glm::vec3& pos, float size) {
 
 void Framework::drawLine(const vec3& a, const vec3& b) {
   renderer.line(a, b, _color, _color);
+}
+
+void Framework::drawEllipsoid(const vec3& a, const vec3& b, float radius) {
+   vec3 direction = b - a; 
+   float len = length(direction);
+   vec3 scale = vec3(radius, radius, len);
+
+   vec3 Z = direction/len;
+   vec3 X = vec3(1,0,0);
+   vec3 Y = cross(Z, X); 
+   X = cross(Y, Z);
+
+   glm::mat3 rot(X, Y, Z);
+   vec3 center = a + 0.5f * direction;
+   atk::Transform TRS(glm::normalize(glm::quat(rot)), center, scale);
+
+   renderer.push();
+   renderer.transform(TRS.matrix());
+   renderer.sphere();
+   renderer.pop();
 }
 
 void Framework::drawText(const std::string& msg, float x, float y) {

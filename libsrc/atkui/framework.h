@@ -16,8 +16,9 @@ class Framework : public agl::Window {
 
  protected:
   virtual void scene() {} // override to update and draw custom components
-
   virtual void draw() override;
+
+ public:
   virtual void setColor(const glm::vec3& c);
   virtual void push();
   virtual void pop();
@@ -30,6 +31,7 @@ class Framework : public agl::Window {
   virtual void drawCube(const glm::vec3& pos, const glm::vec3& size);
   virtual void drawSphere(const glm::vec3& pos, float radius);
   virtual void drawLine(const glm::vec3& a, const glm::vec3& b);
+  virtual void drawEllipsoid(const glm::vec3& a, const glm::vec3& b, float radius);
   virtual void drawCone(const glm::vec3& pos, float size);
   virtual void drawTorus(const glm::vec3& pos, float size);
   virtual void drawCylinder(const glm::vec3& pos, float size);
