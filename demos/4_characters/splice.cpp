@@ -16,7 +16,7 @@ public:
 
    void setup()
    {
-      _alpha = 0;
+      _alpha = 0.0f;
 
       BVHReader reader;
       reader.load("../motions/Beta/walking.bvh", _skeleton, _lower);
@@ -28,8 +28,48 @@ public:
    {
       Motion result;
       result.setFramerate(lower.getFramerate());
-      // todo: your code here
-      result.appendKey(lower.getKey(0));
+
+      int numKeys = 250;
+      for (int i = 0; i < numKeys; i++)
+      {
+         //Loop the lower walking motion
+         Pose origPose = lower.getKey(i % lower.getNumKeys());
+
+         //Start with the lower body and root position from the
+         //walking motion
+         Pose newPose = origPose;
+
+         if (i >= 120) {
+            int upperFrame = (i - 120) % upper.getNumKeys();
+            Pose upperPose = upper.getKey(upperFrame);
+            //Loop through every joint to check if it is a part of the
+            //upper body
+            for (int j = 0; j < _skeleton.getNumJoints(); j++)
+            {
+               Joint* curr = _skeleton.getByID(j);
+               bool isUpperBody = false;
+
+               // Traverse up the skeleton hierarchy to see if this joint descends
+               //from the spine
+               while (curr != nullptr)
+               {
+                  if (curr->getName() == "Beta:Spine1")
+                  {
+                     isUpperBody = true;
+                     break;
+                  }
+                  curr = curr->getParent();
+               }
+
+               if (isUpperBody) 
+               {
+                  newPose.jointRots[j] = glm::slerp(origPose.jointRots[j], upperPose.jointRots[j], alpha);
+               }
+            }
+   
+         }
+         result.appendKey(newPose);
+      }
       return result;
    }
 
