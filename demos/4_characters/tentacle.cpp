@@ -56,7 +56,7 @@ public:
          
          vec3 globalParentPos = joint->getParent()->getGlobalTranslation();
          vec3 globalPos = joint->getGlobalTranslation();
-         drawEllipsoid(globalParentPos, globalPos, 5);
+         //drawEllipsoid(globalParentPos, globalPos, 5);
       }
    }
 
